@@ -1,0 +1,10 @@
+{
+    "port":"",
+    "commands": {
+        "docker": {
+            "start": "docker-compose -p gapi-api-prod up --force-recreate",
+            "stop": "docker stop gapi-api-prod",
+            "build": "docker build -t gapi/api/prod ."
+        }
+    }
+}

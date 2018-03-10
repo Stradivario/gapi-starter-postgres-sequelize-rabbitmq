@@ -1,0 +1,34 @@
+{
+  "name": "gapi-sequelize-postgress-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "gapi-cli start",
+    "start:prod": "gapi-cli start --prod",
+    "stop:prod": "gapi-cli stop --prod",
+    "start:docker": "gapi-cli docker start",
+    "stop:docker": "gapi-cli docker stop",
+    "build:docker": "gapi-cli docker build"
+  },
+  "author": "Kristiyan Tachev",
+  "license": "MIT",
+  "dependencies": {
+    "gapi": "github:Stradivario/gapi",
+    "gapi-sequelize": "github:Stradivario/gapi-sequelize",
+    "pm2-docker": "^2.1.0",
+    "rxjs": "^5.5.6",
+    "typescript": "^2.7.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "./src/**/*.spec.ts"
+    ],
+    "verbose": true,
+    "exec": "ts-node ./src/main.ts",
+    "watch": [
+      "./src/**/*.ts"
+    ],
+    "ext": "ts"
+  }
+}

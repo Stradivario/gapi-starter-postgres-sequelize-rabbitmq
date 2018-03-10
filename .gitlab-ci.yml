@@ -1,0 +1,50 @@
+stages:
+- build
+- start
+- stop
+- test
+
+#MASTER
+master_build:
+  stage: build
+  tags:
+  - master
+  artifacts:
+    paths:
+    - coverage
+  script:
+  - npm run build:docker && npm run start:docker && docker exec gapi-api-rabbitmq rabbitmq-plugins enable rabbitmq_management && sleep 35 && docker exec gapi-api-prod npm test
+  only:
+    - /^master.*$/
+  when: always
+
+#MASTER
+master_start:
+  stage: start
+  tags:
+  - master
+  script:
+  - npm run start:docker && exit
+  only:
+    - /^master.*$/
+  when: manual
+
+master_stop:
+  stage: stop
+  tags:
+  - master
+  script:
+  - npm run stop:docker && exit
+  only:
+    - /^master.*$/
+  when: manual
+
+master_test:
+  stage: test
+  tags:
+  - master
+  script:
+  - npm run test && exit
+  only:
+    - /^master.*$/
+  when: manual
