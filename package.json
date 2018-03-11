@@ -15,6 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "gapi": "github:Stradivario/gapi",
+    "gapi-amqp": "github:Stradivario/gapi-amqp.git",
     "gapi-sequelize": "github:Stradivario/gapi-sequelize",
     "pm2-docker": "^2.1.0",
     "rxjs": "^5.5.6",

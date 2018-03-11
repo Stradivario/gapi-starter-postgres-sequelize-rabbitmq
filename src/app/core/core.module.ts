@@ -1,14 +1,19 @@
 
 import { GapiModule, ConfigService } from 'gapi';
+import { GapiAmqpModule } from 'gapi-amqp';
 import { SequelizeModule } from 'gapi-sequelize';
 import { AuthPrivateService } from './services/auth/auth.service';
 import { readFileSync } from 'fs';
 
 @GapiModule({
-    services: [
+    imports: [
+        GapiAmqpModule.forRoot({
+            host: process.env.AMQP_HOST || '182.10.0.5',
+            port: process.env.AMQP_PORT || 5672
+        }),
         SequelizeModule.forRoot({
             dialect: 'postgres',
-            host: process.env.DB_HOST || '182.10.0.4',
+            host: process.env.DB_HOST || '172.10.0.10',
             port: process.env.DB_PORT || '5432',
             username: process.env.DB_USERNAME || 'dbuser',
             password: process.env.DB_PASSWORD || 'dbuserpass',
@@ -19,6 +24,8 @@ import { readFileSync } from 'fs';
             modelPaths: [process.cwd() + '/src/models']
           }
         ),
+    ],
+    services: [
         ConfigService.forRoot({
             AMQP_CONFIG: {
                 host: '182.10.0.5',
