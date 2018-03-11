@@ -1,5 +1,24 @@
 commands:
-  docker: 
+  workers:
+    start: 'gapi-cli workers start-1 && gapi-cli workers start-2 && gapi-cli workers start-3 && gapi-cli workers start-4'
+    stop: 'docker rm -f gapi-api-prod-worker-1 && docker rm -f gapi-api-prod-worker-2 && docker rm -f gapi-api-prod-worker-3 && docker rm -f gapi-api-prod-worker-4'
+    start-1: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.21 --name gapi-api-prod-worker-1 -p 9001:9000 gapi/api/prod'
+    start-2: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.22 --name gapi-api-prod-worker-2 -p 9002:9000 gapi/api/prod'
+    start-3: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.23 --name gapi-api-prod-worker-3 -p 9003:9000 gapi/api/prod'
+    start-4: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.24 --name gapi-api-prod-worker-4 -p 9004:9000 gapi/api/prod'
+    example-worker-with-port: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.25 --name gapi-api-prod-worker-5 -p 9001:9000 gapi/api/prod'
+  app: 
     start: 'docker-compose -p gapi-api-prod up --force-recreate'
-    stop: 'docker stop gapi-api-prod'
+    stop: 'docker rm -f gapi-api-nginx && docker rm -f gapi-api-prod && docker rm -f gapi-api-rabbitmq'
     build: 'docker build -t gapi/api/prod .'
+    rm-app: 'docker rm -f gapi-api-nginx && docker rm -f gapi-api-prod && docker rm -f gapi-api-rabbitmq'
+  rabbitmq:
+    enable-dashboard: 'docker exec gapi-api-rabbitmq rabbitmq-plugins enable rabbitmq_management'
+
+  # To run these commands you need to type "gapi-cli docker start|stop|build|worker1|worker2|worker3|etc"
+  
+  # You can define your custom commands for example 
+  # commands:
+  #   your-cli:
+  #     my-command: 'npm -v'
+  # This command can be executed as "gapi-cli your-cli my-command"

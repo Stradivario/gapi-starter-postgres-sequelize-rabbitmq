@@ -2,4 +2,4 @@ apps:
   - script   : './src/main.ts'
     name     : 'APP'
     exec_mode: 'cluster'
-    instances: 1
+    instances: 4

@@ -3,8 +3,8 @@ stages:
 - start
 - stop
 - test
+- workers
 
-#MASTER
 master_build:
   stage: build
   tags:
@@ -12,17 +12,20 @@ master_build:
   artifacts:
     paths:
     - coverage
+  before_script:
+  - export PATH=$PATH:/.nvm/versions/node/v8.9.4/bin/
   script:
   - npm run build:docker && npm run start:docker && docker exec gapi-api-rabbitmq rabbitmq-plugins enable rabbitmq_management && sleep 35 && docker exec gapi-api-prod npm test
   only:
     - /^master.*$/
   when: always
 
-#MASTER
 master_start:
   stage: start
   tags:
   - master
+  before_script:
+  - export PATH=$PATH:/.nvm/versions/node/v8.9.4/bin/
   script:
   - npm run start:docker && exit
   only:
@@ -33,6 +36,8 @@ master_stop:
   stage: stop
   tags:
   - master
+  before_script:
+  - export PATH=$PATH:/.nvm/versions/node/v8.9.4/bin/
   script:
   - npm run stop:docker && exit
   only:
@@ -43,8 +48,35 @@ master_test:
   stage: test
   tags:
   - master
+  before_script:
+  - export PATH=$PATH:/.nvm/versions/node/v8.9.4/bin/
   script:
-  - npm run test && exit
+  - npm run test
+  only:
+    - /^master.*$/
+  when: manual
+
+
+master_workers_start:
+  stage: workers
+  tags:
+  - master
+  before_script:
+  - export PATH=$PATH:/.nvm/versions/node/v8.9.4/bin/
+  script:
+  - npm run start:workers
+  only:
+    - /^master.*$/
+  when: manual
+
+master_workers_stop:
+  stage: workers
+  before_script:
+  - export PATH=$PATH:/.nvm/versions/node/v8.9.4/bin/
+  tags:
+  - master
+  script:
+  - npm run stop:workers
   only:
     - /^master.*$/
   when: manual

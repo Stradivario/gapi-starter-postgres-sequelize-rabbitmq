@@ -1,3 +1,5 @@
+![Build Status](http://gitlab.youvolio.com/gapi/gapi-starter-postgres-sequelize/badges/master/build.svg)
+
 # @Gapi Advanced Starter 
 ##### @Nginx, @Rabbitmq, @Postgres, @Sequelize, @Docker, @Graphql
 
@@ -33,28 +35,187 @@ gapi-cli new my-project --advanced
 npm start
 ```
 
-#### To start project for "production" type:
-This will run pm2 process.yml --only APP(DEVELPOMENT) or pm2-docker process.yml --only APP(PRODUCTION) (check process.yml inside root repository)
+#### To stop project for "production" type:
+Following command will stop pm2 processes started
 ```bash
-npm run start:prod
+npm run stop:prod
 ```
+
+###### Following commands will start RabbitMQ, PostgreSQL, API, NGINX as a services you need DOCKER for them
+###### API will be served on https://localhost:80 and https://localhost:80/subscriptions
 
 ### Docker
 
 #### To build project with Docker type:
 ```bash
-npm run build:docker
+gapi-cli app build
 ```
 
 #### To start project with Docker type:
 ```bash
-npm run start:docker
+gapi-cli app start
 ```
 
 #### To stop project type:
 ```bash
-npm run stop:docker
+gapi-cli app stop
 ```
+
+### Workers
+###### All workers will be mapped as Proxy and will be reverted to https://localhost:80 and https://localhost:80/subscriptions
+###### So you don't have to worry about if some of your workers stopped responding
+###### TODO: Create monitoring APP for all workers and main API
+
+#### To start workers type:
+```bash
+gapi-cli workers start
+```
+
+#### To stop workers type:
+```bash
+gapi-cli workers stop
+```
+
+###### To add more workers
+###### By default there are 4 workers with 4 processes with "exec_mode: cluster" of the original process inside single docker container
+###### You can control Processes inside single docker container from "root/process.yml" file.
+```yml
+apps:
+  - script   : './src/main.ts'
+    name     : 'APP'
+    exec_mode: 'cluster'
+    instances: 4
+
+```
+
+###### To map new worker as a stream open root/nginx/config/private/default
+
+
+```nginx
+upstream app_servers {
+    server 182.10.0.3:9000; # Main process
+    server 182.10.0.21:9000; # Worker 1
+    server 182.10.0.22:9000; # Worker 2
+    server 182.10.0.23:9000; # Worker 3
+    server 182.10.0.24:9000; # Worker 4
+
+    # Add more workers here
+    # server 182.10.0.25:9000; # Worker 5
+}
+
+server {
+    listen 80;
+    server_name api.yourdomain.com;
+    access_log api-yourdomain.access.log;
+
+    location / {
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection "upgrade";
+       client_max_body_size 50M;
+       proxy_set_header Host $http_host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header X-Forwarded-Proto $scheme;
+       proxy_set_header X-Frame-Options SAMEORIGIN;
+       proxy_buffers 256 16k;
+	     proxy_buffering off;
+       proxy_buffer_size 16k;
+       proxy_read_timeout 600s;
+       proxy_pass http://app_servers;
+    }
+
+    location /subscriptions {
+         # prevents 502 bad gateway error
+        proxy_buffers 8 32k;
+        proxy_buffer_size 64k;
+
+        # redirect all HTTP traffic to localhost:9000;
+        proxy_pass http://app_servers/subscriptions;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        #proxy_set_header X-NginX-Proxy true;
+
+        # enables WS support
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+	      proxy_buffering off;
+        proxy_read_timeout 999999999;
+
+    }
+    if ($scheme = http) {
+       return 301 https://$server_name$request_uri;
+    }
+    listen 443;
+    ssl on;
+    ssl_certificate         /usr/share/certs/cert.pem;
+    ssl_certificate_key     /usr/share/certs/cert.key;
+}
+
+
+```
+
+###### When you add another worker it should be on different IP with same port 9000
+###### Open root/gapi-cli.conf.yml file you will find this file:
+
+```yml
+
+commands:
+  workers:
+    start: 'gapi-cli workers start-1 && gapi-cli workers start-2 && gapi-cli workers start-3 && gapi-cli workers start-4'
+    stop: 'docker rm -f gapi-api-prod-worker-1 && docker rm -f gapi-api-prod-worker-2 && docker rm -f gapi-api-prod-worker-3 && docker rm -f gapi-api-prod-worker-4'
+    start-1: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.21 --name gapi-api-prod-worker-1 -p 9001:9000 gapi/api/prod'
+    start-2: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.22 --name gapi-api-prod-worker-2 -p 9002:9000 gapi/api/prod'
+    start-3: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.23 --name gapi-api-prod-worker-3 -p 9003:9000 gapi/api/prod'
+    start-4: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.24 --name gapi-api-prod-worker-4 -p 9004:9000 gapi/api/prod'
+    example-worker-with-port: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.25 --name gapi-api-prod-worker-5 -p 9001:9000 gapi/api/prod'
+  app: 
+    start: 'docker-compose -p gapi-api-prod up --force-recreate'
+    stop: 'docker rm -f gapi-api-nginx && docker rm -f gapi-api-prod && docker rm -f gapi-api-rabbitmq'
+    build: 'docker build -t gapi/api/prod .'
+    rm-app: 'docker rm -f gapi-api-nginx && docker rm -f gapi-api-prod && docker rm -f gapi-api-rabbitmq'
+  rabbitmq:
+    enable-dashboard: 'docker exec gapi-api-rabbitmq rabbitmq-plugins enable rabbitmq_management'
+
+  # To run these commands you need to type "gapi-cli docker start|stop|build|worker1|worker2|worker3|etc"
+  
+  # You can define your custom commands for example 
+  # commands:
+  #   your-cli:
+  #     my-command: 'npm -v'
+  # This command can be executed as "gapi-cli your-cli my-command"
+
+```
+###### Adding one more worker:
+```yml
+start-5: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.25 --name gapi-api-prod-worker-5 -p 9005:9000 gapi/api/prod'
+```
+###### Then edit start task inside workers to start new worker 5 
+```yml
+start: 'gapi-cli workers start-1 && gapi-cli workers start-2 && gapi-cli workers start-3 && gapi-cli workers start-4 & gapi-cli workers start-5'
+```
+
+###### Thats' it!! Now you have 4 processes like CLUSTERS inside 1 docker container with ip 182.10.0.25 and external port(optional) 9005;
+###### You can specify worker also without port because all workers are inside internal network called "gapiapiprod_gapi" 
+###### 182.10.0.21/22/23/24/25:9000 
+
+```yml
+start-5: 'docker run -d --network=gapiapiprod_gapi --ip=182.10.0.25 --name gapi-api-prod-worker-5 gapi/api/prod'
+```
+
+###### If you want to change port forwarding to another port you need to set just nginx configuration:
+
+```yml
+  nginx:
+    image: sameersbn/nginx:1.10.1-5
+    ports:
+      - "81:80"
+      - "443:443"
+```
+
+###### Now you can find your API served onto https://localhost:81/ and https://localhost:81/subscriptions
+###### All workers don't care about that  because they will be served and mapped from nginx to port 80.
 
 ###### You can check docker-compose file to configurate environment variables
 ```yml
@@ -155,69 +316,6 @@ networks:
 
 
 ```
-
-###### This script will start NGINX as a proxy container
-###### Then we map our builded and started APP for queries and subscriptions
-###### Builded container will be gapi/api/prod with name gapi-api-prod
-
-```nginx
-server {
-    listen 80;
-    server_name api.yourdomain.com;
-    access_log api-yourdomain.access.log;
-    location / {
-       proxy_set_header Upgrade $http_upgrade;
-       proxy_set_header Connection "upgrade";
-       client_max_body_size 50M;
-       proxy_set_header Host $http_host;
-       proxy_set_header X-Real-IP $remote_addr;
-       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-       proxy_set_header X-Forwarded-Proto $scheme;
-       proxy_set_header X-Frame-Options SAMEORIGIN;
-       proxy_buffers 256 16k;
-	     proxy_buffering off;
-       proxy_buffer_size 16k;
-       proxy_read_timeout 600s;
-       proxy_pass http://182.10.0.3:9000;
-    }
-
-    location /subscriptions {
-        
-        # prevents 502 bad gateway error
-        proxy_buffers 8 32k;
-        proxy_buffer_size 64k;
-
-        # redirect all HTTP traffic to localhost:9000;
-        proxy_pass http://182.10.0.3:9000/subscriptions;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Host $http_host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        #proxy_set_header X-NginX-Proxy true;
-
-        # enables WS support
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-	      proxy_buffering off;
-        proxy_read_timeout 999999999;
-
-    }
-    # redirect all HTTP to HTTPS
-    if ($scheme = http) {
-       return 301 https://$server_name$request_uri;
-    }
-
-    listen 443;
-    ssl on;
-    ssl_certificate         /usr/share/certs/cert.pem;
-    ssl_certificate_key     /usr/share/certs/cert.key;
-
-}
-
-```
-
-
-
 
 ##### After successfully started project you can open your browser to localhost:80 or 182.10.0.3:9000 the api will be served there
 
