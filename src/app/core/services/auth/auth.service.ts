@@ -1,18 +1,18 @@
 
-import { Service, ConnectionHookService, AuthService, Injector, Container, TokenData } from "gapi";
+import { Service, ConnectionHookService, AuthService, Injector, Container, TokenData } from 'gapi';
 import * as Boom from 'boom';
 
 
 interface UserInfo extends TokenData {
-    scope: ['ADMIN', 'USER']
+    scope: ['ADMIN', 'USER'];
     type: 'ADMIN' | 'USER';
 }
 
 @Service()
 export class AuthPrivateService {
 
-    @Injector(AuthService) private authService: AuthService
-    @Injector(ConnectionHookService) private connectionHookService: ConnectionHookService
+    @Injector(AuthService) private authService: AuthService;
+    @Injector(ConnectionHookService) private connectionHookService: ConnectionHookService;
 
     constructor() {
         this.connectionHookService.modifyHooks.onSubConnection = this.onSubConnection.bind(this);
@@ -30,7 +30,7 @@ export class AuthPrivateService {
     validateToken(token: string, requestType: 'Query' | 'Subscription' = 'Query'): UserInfo {
         const user = <UserInfo>this.verifyToken(token);
         user.type = user.scope[0];
-        console.log(`${requestType} from: ${JSON.stringify(user)}`)
+        console.log(`${requestType} from: ${JSON.stringify(user)}`);
         if (user) {
             return user;
         } else {
@@ -52,11 +52,11 @@ export class AuthPrivateService {
     }
 
     decryptPassword(password: string): string {
-        return this.authService.decrypt(password)
+        return this.authService.decrypt(password);
     }
 
     encryptPassword(password: string): string {
-        return this.authService.encrypt(password)
+        return this.authService.encrypt(password);
     }
 
 }

@@ -11,7 +11,10 @@
     "stop:docker": "gapi-cli docker stop",
     "build:docker": "gapi-cli docker build",
     "start:workers": "gapi-cli workers start",
-    "stop:workers": "gapi-cli workers stop"
+    "stop:workers": "gapi-cli workers stop",
+    "pretest": "npm run lint",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "test": "jest"
   },
   "author": "Kristiyan Tachev",
   "license": "MIT",
@@ -21,6 +24,12 @@
     "pm2-docker": "^2.1.0",
     "rxjs": "^5.5.6",
     "typescript": "^2.7.1"
+  },
+  "devDependencies": {
+    "jest": "^22.4.2",
+    "jest-cli": "^22.4.2",
+    "ts-jest": "^22.4.1",
+    "ts-lint": "^4.5.1"
   },
   "nodemonConfig": {
     "ignore": [
@@ -32,5 +41,29 @@
       "./src/**/*.ts"
     ],
     "ext": "ts"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "coverageReporters": [
+      "lcov",
+      "html"
+    ],
+    "rootDir": "./",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "node"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/graphql/.*\\.spec.(ts|tsx|js)$",
+    "verbose": true,
+    "collectCoverage": true
   }
 }

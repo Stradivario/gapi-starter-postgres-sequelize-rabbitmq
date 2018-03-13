@@ -1,4 +1,4 @@
-import { GraphQLInputObjectType, GraphQLNonNull, GraphQLBoolean, GraphQLString } from "graphql";
+import { GraphQLInputObjectType, GraphQLNonNull, GraphQLBoolean, GraphQLString } from 'graphql';
 
 export const UserPayloadType = new GraphQLInputObjectType({
     name: 'UserPayloadType',
