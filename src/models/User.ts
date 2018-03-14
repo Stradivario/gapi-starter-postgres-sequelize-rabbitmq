@@ -28,6 +28,7 @@ export class User extends Model<User> {
   @Column
   username: string;
 
+
   @Column({
     type: DataType.ENUM({ values: ['ADMIN', 'USER'] })
   })

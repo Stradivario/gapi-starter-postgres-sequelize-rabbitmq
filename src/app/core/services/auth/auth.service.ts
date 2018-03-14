@@ -1,5 +1,5 @@
 
-import { Service, ConnectionHookService, AuthService, Injector, Container, TokenData } from 'gapi';
+import { Service, ConnectionHookService, AuthService, Injector, Container, TokenData, Token } from 'gapi';
 import * as Boom from 'boom';
 
 
@@ -42,7 +42,7 @@ export class AuthPrivateService {
         return this.authService.verifyToken(token);
     }
 
-    signJWTtoken(): string {
+    signJWTtoken(tokenData: TokenData): string {
         const jwtToken = this.authService.sign({
             email: '',
             id: 1,

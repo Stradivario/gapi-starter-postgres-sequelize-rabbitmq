@@ -15,7 +15,7 @@ master_build:
   before_script:
   - export PATH=$PATH:/.nvm/versions/node/v8.9.4/bin/
   script:
-  - npm run build:docker && npm run start:docker && docker exec gapi-api-rabbitmq rabbitmq-plugins enable rabbitmq_management && sleep 35 && docker exec gapi-api-prod npm test
+  - npm run build:docker && npm run start:docker && docker exec gapi-api-rabbitmq rabbitmq-plugins enable rabbitmq_management && sleep 15 && docker exec gapi-api-prod npm test
   only:
     - /^master.*$/
   when: always

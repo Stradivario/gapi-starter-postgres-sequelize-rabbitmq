@@ -27,6 +27,11 @@ import { readFileSync } from 'fs';
                 port: process.env.API_PORT || 9000,
                 cert: readFileSync('./cert.key'),
                 graphiql: true,
+                cyper: {
+                    iv: 'JkYt1H3fA8JK9L3G',
+                    privateKey: '8zTVzr3p53VC12jmV54rIYu2545x47lY',
+                    algorithm: 'aes256'
+                },
                 graphiqlToken: process.env.GRAPHIQL_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtyaXN0aXFuLnRhY2hldkBnbWFpbC5jb20iLCJpZCI6MSwic2NvcGUiOlsiQURNSU4iXSwiaWF0IjoxNTIwMjkxMzkyfQ.9hpIDPkSiGvjTmUEyg_R_izW-ra2RzzLbe3Uh3IFsZg'
             },
         }),

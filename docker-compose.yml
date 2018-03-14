@@ -19,7 +19,7 @@ services:
   api:
     image: gapi/api/prod:latest
     ports:
-      - "9000:9000"
+      - "9000"
     environment:
       - NODE_ENV=production
       - API_PORT=9000
@@ -50,7 +50,7 @@ services:
   PostgreSQLDev:
     image: sameersbn/postgresql:9.5-3
     ports:
-      - "5432:5432"
+      - "5432"
     environment:
       - DEBUG=false
       - TIMEZONE=Europe/Sofia
@@ -69,10 +69,35 @@ services:
       - REPLICATION_SSLMODE=
     restart: always
     container_name: gapi-api-postgres
-
     networks:
       gapi:
         ipv4_address: 182.10.0.4
+
+  PostgreSQLDevTesting:
+    image: sameersbn/postgresql:9.5-3
+    ports:
+      - "5432"
+    environment:
+      - DEBUG=false
+      - TIMEZONE=Europe/Sofia
+      - LOCALE=bg_BG.UTF-8
+
+      - DB_USER=dbuser
+      - DB_PASS=dbuserpass
+      - DB_NAME=postgres
+      - DB_TEMPLATE=
+
+      - DB_EXTENSION=
+
+      - REPLICATION_MODE=
+      - REPLICATION_USER=
+      - REPLICATION_PASS=
+      - REPLICATION_SSLMODE=
+    restart: always
+    container_name: gapi-api-postgres-testing
+    networks:
+      gapi:
+        ipv4_address: 182.10.0.99
 
   rabbitMq:
     image: rabbitmq:3.7.2
@@ -86,6 +111,20 @@ services:
     networks:
       gapi:
         ipv4_address: 182.10.0.5
+
+  pgadmin:
+    image: thajeztah/pgadmin4
+    ports:
+      - "5050"
+    volumes:
+      - /usr/bin/:/usr/pg
+      - /usr/database/:/usr/database
+      - /tmp/:/tmp
+    restart: always
+    container_name: gapi-api-pg-admin
+    networks:
+      gapi:
+        ipv4_address: 182.10.0.6
 
 networks:
   gapi:

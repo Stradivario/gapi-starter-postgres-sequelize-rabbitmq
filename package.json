@@ -4,17 +4,18 @@
   "description": " ",
   "main": "index.js",
   "scripts": {
-    "start": "gapi-cli start",
-    "start:prod": "gapi-cli start --prod",
-    "stop:prod": "gapi-cli stop --prod",
-    "start:docker": "gapi-cli docker start",
-    "stop:docker": "gapi-cli docker stop",
-    "build:docker": "gapi-cli docker build",
-    "start:workers": "gapi-cli workers start",
-    "stop:workers": "gapi-cli workers stop",
+    "start": "gapi start",
+    "start:prod": "gapi start --prod",
+    "stop:prod": "gapi stop --prod",
+    "start:docker": "gapi app start",
+    "stop:docker": "gapi app stop",
+    "build:docker": "gapi app build",
+    "start:workers": "gapi workers start",
+    "stop:workers": "gapi workers stop ",
     "pretest": "npm run lint",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "test": "jest"
+    "test": "gapi test --before",
+    "test-watch": "gapi test --watch"
   },
   "author": "Kristiyan Tachev",
   "license": "MIT",
@@ -26,6 +27,8 @@
     "typescript": "^2.7.1"
   },
   "devDependencies": {
+    "@types/jest": "^22.2.0",
+    "graphql-tester": "0.0.5",
     "jest": "^22.4.2",
     "jest-cli": "^22.4.2",
     "ts-jest": "^22.4.1",
@@ -62,7 +65,7 @@
     "transform": {
       "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "/graphql/.*\\.spec.(ts|tsx|js)$",
+    "testRegex": "/src/.*\\.spec.(ts|tsx|js)$",
     "verbose": true,
     "collectCoverage": true
   }
