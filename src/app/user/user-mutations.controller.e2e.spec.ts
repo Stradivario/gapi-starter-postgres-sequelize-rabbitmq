@@ -1,5 +1,5 @@
 import { IQuery, IMutation } from '../core/test-util/api-types/graphql';
-import { AtcTestUtil } from '../core/test-util/testing.service';
+import { TestUtilService } from '../core/test-util/testing.service';
 import { LOGIN_QUERY_TEST } from '../core/test-util/queries/login.query';
 import { REGISTER_MUTATION } from '../core/test-util/mutations/register.mutation';
 import { CREATE_USER_MUTATION } from '../core/test-util/mutations/createUser.mutation';
@@ -9,7 +9,7 @@ import { AuthPrivateService } from '../core/services/auth/auth.service';
 import { Container } from 'gapi';
 import { User } from '../../models/User';
 
-const atcTestUtil: AtcTestUtil = Container.get(AtcTestUtil);
+const atcTestUtil: TestUtilService = Container.get(TestUtilService);
 
 beforeAll(() => atcTestUtil.init());
 afterAll(() => atcTestUtil.destroy());

@@ -5,7 +5,8 @@
 /tmp
 /out-tsc
 /prod
-
+*.js
+*.js.map
 # dependencies
 /node_modules
 

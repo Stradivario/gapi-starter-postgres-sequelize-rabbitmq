@@ -15,7 +15,7 @@
     "pretest": "npm run lint",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "test": "gapi test --before",
-    "test-watch": "gapi test --watch"
+    "test-watch": "gapi test --before && gapi test --watch"
   },
   "author": "Kristiyan Tachev",
   "license": "MIT",

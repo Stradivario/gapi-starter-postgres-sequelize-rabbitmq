@@ -1,6 +1,5 @@
 
 import { GapiModule, ConfigService } from 'gapi';
-import { GapiAmqpModule } from 'gapi-amqp';
 import { SequelizeModule } from 'gapi-sequelize';
 import { AuthPrivateService } from './services/auth/auth.service';
 import { readFileSync } from 'fs';

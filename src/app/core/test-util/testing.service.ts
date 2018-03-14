@@ -36,7 +36,7 @@ interface SendRequestQueryType {
 }
 
 @Service()
-export class AtcTestUtil {
+export class TestUtilService {
     users: TESTERS = {};
     defaultPassword = '123456';
     private tester: any;

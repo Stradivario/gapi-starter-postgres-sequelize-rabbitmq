@@ -1,4 +1,4 @@
-import { AtcTestUtil } from './app/core/test-util/testing.service';
+import { TestUtilService } from './app/core/test-util/testing.service';
 import { generateName } from './app/core/test-util/randomNameGenerator';
 import { Container } from 'gapi';
 import { UserSettings, User } from './models/User';
@@ -24,7 +24,7 @@ export const FAKE_USERS: FakeUser[] = [{
         sidebar: true
     },
     email: 'kristiqn.tachev@gmail.com',
-    password: '98412218',
+    password: TEST_CONFIG.defaultPassword,
     userType: 'ADMIN'
 }, {
     username: 'Admin Account',
@@ -48,7 +48,7 @@ export const FAKE_USERS: FakeUser[] = [{
         sidebar: true
     },
     email: 'zdravko.tatarski@gmail.com',
-    password: '123456',
+    password: TEST_CONFIG.defaultPassword,
     userType: 'USER'
 }, {
     username: 'Ivan Spiridonov Admin',
@@ -56,7 +56,7 @@ export const FAKE_USERS: FakeUser[] = [{
         sidebar: true
     },
     email: 'pastir1@gmail.com',
-    password: 'pass123456',
+    password: TEST_CONFIG.defaultPassword,
     userType: 'ADMIN'
 }, {
     username: 'Ivan Spiridonov User',
@@ -64,11 +64,11 @@ export const FAKE_USERS: FakeUser[] = [{
         sidebar: true
     },
     email: 'pastir2@gmail.com',
-    password: 'pass123456',
+    password: TEST_CONFIG.defaultPassword,
     userType: 'USER'
 }];
 
-const testUtil = Container.get(AtcTestUtil);
+const testUtil = Container.get(TestUtilService);
 
 if (process.env.BEFORE_HOOK) {
     testUtil.setSequelizeConfig({ force: true });
