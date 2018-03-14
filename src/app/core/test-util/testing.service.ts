@@ -39,7 +39,6 @@ interface SendRequestQueryType {
 export class AtcTestUtil {
     users: TESTERS = {};
     defaultPassword = '123456';
-    private graphqlEndpoint = process.env.ENDPOINT_TESTING;
     private tester: any;
     public sequelize: GapiSequelizeService;
     private ME_TESTING_DATABASE_ID = 1;
@@ -47,11 +46,11 @@ export class AtcTestUtil {
     private USER_TESTING_DATABASE_ID = 3;
     private defaultSequelizeConfig: SequelizeConfigService = {
         dialect: 'postgres',
-        host: process.env.DB_HOST_TESTING,
-        port: process.env.DB_PORT_TESTING,
-        username: process.env.DB_USERNAME_TESTING,
-        password: process.env.DB_PASSWORD_TESTING,
-        name: process.env.DB_NAME_TESTING,
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        name: process.env.DB_NAME,
         storage: ':memory:',
         logging: false,
         force: false,
@@ -80,11 +79,11 @@ export class AtcTestUtil {
     }
 
     disableAuthorization() {
-        this.tester = tester({ url: this.graphqlEndpoint, contentType: 'application/json' });
+        this.tester = tester({ url: process.env.ENDPOINT_TESTING, contentType: 'application/json' });
     }
 
     enableAuthorization() {
-        this.tester = tester({ url: this.graphqlEndpoint, contentType: 'application/json', authorization: this.token });
+        this.tester = tester({ url: process.env.ENDPOINT_TESTING, contentType: 'application/json', authorization: process.env.TOKEN_TESTING });
     }
 
     sendRequest<T>(query: SendRequestQueryType): Observable<Response<T>> {

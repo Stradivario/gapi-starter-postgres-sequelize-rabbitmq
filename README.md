@@ -161,6 +161,7 @@ server {
 
 ```yml
 commands:
+  commands:
   
   testing:
     stop: 'docker rm -f gapi-api-prod-worker-tests-executor && docker rm -f gapi-api-prod-worker-tests-provider'
@@ -193,26 +194,52 @@ commands:
 
   rabbitmq:
     stop: 'docker rm -f gapi-api-rabbitmq'
+    restart: 'docker restart gapi-api-rabbitmq'
     enable-dashboard: 'docker exec gapi-api-rabbitmq rabbitmq-plugins enable rabbitmq_management'
 
 config:
-  test:
+
+  # Application configuration on runtime
+  app:
+
     local:
-      db_port: '5432'
-      db_host: '182.10.0.4'
-      db_user: 'dbuser'
-      db_pass: 'dbuserpass'
-      db_name: 'postgres'
-      endpoint: 'http://localhost:9000/graphql'
+      API_CERT: './cert.key'
+      NODE_ENV: 'development'
+      GRAPHIQL: 'true'
+      GRAPHIQL_TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtyaXN0aXFuLnRhY2hldkBnbWFpbC5jb20iLCJpZCI6MSwic2NvcGUiOlsiQURNSU4iXSwiaWF0IjoxNTIwMjkxMzkyfQ.9hpIDPkSiGvjTmUEyg_R_izW-ra2RzzLbe3Uh3IFsZg'
+      API_PORT: '9000'
+
+    prod:
+      API_CERT: './cert.key'
+      API_PORT: '9000'
+      NODE_ENV: 'production'
+
+  # Testing configuration for local(dev) or worker(running tests as a separate worker with separate database)
+  test:
+
+    local:
+      API_CERT: './cert.key'
+      NODE_ENV: 'development'
+      DB_PORT: '5432'
+      DB_HOST: '182.10.0.4'
+      DB_USERNAME: 'dbuser'
+      DB_PASSWORD: 'dbuserpass'
+      DB_NAME: 'postgres'
+      ENDPOINT_TESTING: 'http://localhost:9000/graphql'
+      TOKEN_TESTING: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtyaXN0aXFuLnRhY2hldkBnbWFpbC5jb20iLCJzY29wZSI6WyJBRE1JTiJdLCJpZCI6MSwiaWF0IjoxNTE2OTk2MzYxfQ.7ANr5VHrViD3NkCaDr0nSWYwk46UAEbOwB52pqye4AM'
+
     worker:
-      db_port: '5432'
-      db_host: '182.10.0.99'
-      db_user: 'dbuser'
-      db_pass: 'dbuserpass'
-      db_name: 'postgres'
-      endpoint: 'http://182.10.0.101:9000/graphql'
+      API_CERT: './cert.key'
+      NODE_ENV: 'production'
+      ENDPOINT_TESTING: 'http://182.10.0.101:9000/graphql'
+      DB_PORT_TESTING: '5432'
+      DB_HOST_TESTING: '182.10.0.99'
+      DB_USERNAME_TESTING: 'dbuser'
+      DB_PASSWORD_TESTING: 'dbuserpass'
+      DB_NAME_TESTING: 'postgres'
+      TOKEN_TESTING: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtyaXN0aXFuLnRhY2hldkBnbWFpbC5jb20iLCJzY29wZSI6WyJBRE1JTiJdLCJpZCI6MSwiaWF0IjoxNTE2OTk2MzYxfQ.7ANr5VHrViD3NkCaDr0nSWYwk46UAEbOwB52pqye4AM'
 
-
+  
   # You can define your custom commands for example 
   # commands:
   #   your-cli:
