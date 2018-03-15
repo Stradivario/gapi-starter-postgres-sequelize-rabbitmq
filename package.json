@@ -43,6 +43,9 @@
     "watch": [
       "./src/**/*.ts"
     ],
+    "events": {
+      "restart": "sleep 1 && gapi schema introspect"
+    },
     "ext": "ts"
   },
   "jest": {
