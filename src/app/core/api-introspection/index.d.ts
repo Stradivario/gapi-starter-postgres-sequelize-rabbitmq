@@ -22,13 +22,13 @@
     description: Query type for all get requests which will not change persistent data
   */
   export interface IQuery {
-    __typename: "Query";
+    __typename?: "Query";
     findUser: IUserType | null;
 }
 
   
   export interface IUserType {
-    __typename: "UserType";
+    __typename?: "UserType";
     id: number | null;
     username: string | null;
     userType: string | null;
@@ -37,7 +37,7 @@
 
   
   export interface IUserSettings {
-    __typename: "UserSettings";
+    __typename?: "UserSettings";
     sidebar: boolean | null;
     language: string | null;
 }
@@ -46,7 +46,7 @@
     description: Mutation type for all requests which will change persistent data
   */
   export interface IMutation {
-    __typename: "Mutation";
+    __typename?: "Mutation";
     destroyUser: IUserType | null;
     updateUser: IUserType | null;
     addUser: IUserType | null;
@@ -73,7 +73,7 @@
 
   
   export interface IUserMessage {
-    __typename: "UserMessage";
+    __typename?: "UserMessage";
     message: string | null;
 }
 
@@ -81,7 +81,7 @@
     description: Subscription type for all rabbitmq subscriptions via pub sub
   */
   export interface ISubscription {
-    __typename: "Subscription";
+    __typename?: "Subscription";
     subscribeToUserMessagesBasic: IUserMessage | null;
     subscribeToUserMessagesWithFilter: IUserMessage | null;
 }

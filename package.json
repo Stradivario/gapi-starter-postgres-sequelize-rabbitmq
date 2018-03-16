@@ -44,7 +44,7 @@
       "./src/**/*.ts"
     ],
     "events": {
-      "restart": "sleep 1 && gapi schema introspect"
+      "restart": "sleep 5 && gapi schema introspect"
     },
     "ext": "ts"
   },
