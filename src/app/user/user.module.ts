@@ -1,5 +1,5 @@
 
-import { GapiModule } from 'gapi';
+import { GapiModule } from '@gapi/core';
 import { UserQueriesController } from './user-queries.controller';
 import { UserSubscriptionsController } from './user-subscriptions.controller';
 import { UserMutationsController } from './user-mutations.controller';

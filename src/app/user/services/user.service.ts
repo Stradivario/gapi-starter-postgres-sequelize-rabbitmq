@@ -1,4 +1,4 @@
-import { Service } from 'gapi';
+import { Service } from '@gapi/core';
 import { User } from '../../../models/User';
 
 @Service()

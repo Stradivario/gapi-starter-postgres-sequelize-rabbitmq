@@ -6,7 +6,7 @@
 ## This is advanced example project related with [GAPI](https://github.com/Stradivario/gapi)
 ## To check basic example project go to [basic-example](https://github.com/Stradivario/gapi-starter)
 
-## Included [gapi-sequelize](https://github.com/Stradivario/gapi-sequelize) module
+## Included [@gapi/sequelize](https://github.com/Stradivario/gapi-sequelize) module
 
 
 #### To start developing clone repository
@@ -18,7 +18,7 @@ git clone https://github.com/Stradivario/gapi-starter-postgres-sequelize
 #### Better use command line utility(gapi) to install it type following command:
 
 ```bash
-npm i -g gapi-cli
+npm i -g @gapi/cli
 ```
 
 

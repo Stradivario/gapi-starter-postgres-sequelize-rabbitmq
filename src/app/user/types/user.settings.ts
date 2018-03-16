@@ -1,4 +1,4 @@
-import { GraphQLString, GapiObjectType, GraphQLScalarType, GraphQLBoolean } from 'gapi';
+import { GraphQLString, GapiObjectType, GraphQLScalarType, GraphQLBoolean } from '@gapi/core';
 
 
 @GapiObjectType()

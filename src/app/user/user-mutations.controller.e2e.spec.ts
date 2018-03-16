@@ -6,7 +6,7 @@ import { CREATE_USER_MUTATION } from '../core/test-util/mutations/createUser.mut
 import { generateName, generateEmail } from '../core/test-util/randomNameGenerator';
 import { Credential } from '../../models/Credential';
 import { AuthPrivateService } from '../core/services/auth/auth.service';
-import { Container } from 'gapi';
+import { Container } from '@gapi/core';
 import { User } from '../../models/User';
 
 const atcTestUtil: TestUtilService = Container.get(TestUtilService);

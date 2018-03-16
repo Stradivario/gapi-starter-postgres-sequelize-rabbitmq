@@ -1,7 +1,7 @@
 import {
     Query, GraphQLNonNull, Type,
     GapiController, GraphQLInt, Injector
-} from 'gapi';
+} from '@gapi/core';
 import { UserService } from './services/user.service';
 import { UserObjectType } from './types/user.type';
 import { User } from '../../models/User';

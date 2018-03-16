@@ -1,5 +1,5 @@
-import { Service, Container, Injector } from 'gapi';
-import { GapiSequelizeService, SequelizeConfigService } from 'gapi-sequelize';
+import { Service, Container, Injector } from '@gapi/core';
+import { GapiSequelizeService, SequelizeConfigService } from '@gapi/sequelize';
 import { Observable } from 'rxjs';
 import { tester } from 'graphql-tester';
 import { User } from '../../../models/User';

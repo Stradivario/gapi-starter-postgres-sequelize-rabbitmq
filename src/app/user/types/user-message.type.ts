@@ -1,4 +1,4 @@
-import { GapiObjectType, GraphQLScalarType, GraphQLString } from 'gapi';
+import { GapiObjectType, GraphQLScalarType, GraphQLString } from '@gapi/core';
 
 @GapiObjectType()
 export class UserMessage {

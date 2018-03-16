@@ -2,7 +2,7 @@
 import {
     GapiObjectType, GraphQLScalarType, GraphQLString, GapiController,
     GapiPubSubService, Type, Injector, Subscribe, Subscription, withFilter, Scope, GraphQLInt, GraphQLNonNull, Inject
-} from 'gapi';
+} from '@gapi/core';
 import { UserService } from './services/user.service';
 import { UserMessageType, UserMessage } from './types/user-message.type';
 

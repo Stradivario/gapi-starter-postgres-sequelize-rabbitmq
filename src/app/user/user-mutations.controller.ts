@@ -5,7 +5,7 @@ import {
     GraphQLInt, Injector,
     GapiPubSubService, GraphQLString, GraphQLID,
     GraphQLInputObjectType, GraphQLBoolean
-} from 'gapi';
+} from '@gapi/core';
 import { UserService } from './services/user.service';
 import { UserObjectType } from './types/user.type';
 import { UserMessage, UserMessageType } from './types/user-message.type';

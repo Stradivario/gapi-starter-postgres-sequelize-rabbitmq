@@ -20,8 +20,8 @@
   "author": "Kristiyan Tachev",
   "license": "MIT",
   "dependencies": {
-    "gapi": "github:Stradivario/gapi",
-    "gapi-sequelize": "github:Stradivario/gapi-sequelize",
+    "@gapi/core": "^0.5.2",
+    "@gapi/sequelize": "0.0.3",
     "pm2-docker": "^2.1.0",
     "rxjs": "^5.5.6",
     "typescript": "^2.7.1"
