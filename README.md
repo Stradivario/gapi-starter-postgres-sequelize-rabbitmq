@@ -65,7 +65,7 @@ gapi start
 gapi test --watch
 ```
 ###### You will end up with something like this
- ![Alt Text](https://raw.githubusercontent.com/Stradivario/gapi/master/images/sidebyside.png)
+ ![Alt Text](https://raw.githubusercontent.com/Stradivario/gapi-cli/master/docs/assets/images/sidebyside.png)
 
 #### Custom logic before testing ( for example creating MOCK users to database before testing)
 s
