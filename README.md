@@ -68,7 +68,7 @@ gapi test --watch
  ![Alt Text](https://raw.githubusercontent.com/Stradivario/gapi-cli/master/docs/assets/images/sidebyside.png)
 
 #### Custom logic before testing ( for example creating MOCK users to database before testing)
-s
+
 ##### Create file test.ts inside root/src/test.ts with this content
 ##### Everytime you run test with --before argument it will set environment variable BEFORE_HOOK
 ```typescript

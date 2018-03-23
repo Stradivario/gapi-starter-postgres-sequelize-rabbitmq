@@ -1,5 +1,5 @@
 
-import { Service, ConnectionHookService, AuthService, Injector, Container, TokenData, Token } from '@gapi/core';
+import { Service, ConnectionHookService, AuthService, Injector, TokenData } from '@gapi/core';
 import * as Boom from 'boom';
 
 

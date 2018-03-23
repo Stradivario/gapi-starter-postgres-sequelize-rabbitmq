@@ -1,6 +1,6 @@
 {
   "name": "gapi-sequelize-postgress-starter",
-  "version": "0.4.2",
+  "version": "0.5.8",
   "description": " ",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "author": "Kristiyan Tachev",
   "license": "MIT",
   "dependencies": {
-    "@gapi/core": "^0.5.2",
+    "@gapi/core": "^0.5.8",
     "@gapi/sequelize": "0.0.3",
     "pm2-docker": "^2.1.0",
     "rxjs": "^5.5.6",

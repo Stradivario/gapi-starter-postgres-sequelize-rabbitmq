@@ -1,5 +1,4 @@
 import { TestUtilService } from './app/core/test-util/testing.service';
-import { generateName } from './app/core/test-util/randomNameGenerator';
 import { Container } from '@gapi/core';
 import { UserSettings, User } from './models/User';
 import { Credential } from './models/Credential';

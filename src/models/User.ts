@@ -8,8 +8,7 @@ import {
   PrimaryKey,
   AutoIncrement,
   HasMany,
-  DataType,
-  BelongsToMany
+  DataType
 } from 'sequelize-typescript';
 import { Credential } from './Credential';
 
