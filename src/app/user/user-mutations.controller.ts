@@ -15,9 +15,10 @@ import { User } from '../../models/User';
 @GapiController()
 export class UserMutationsController {
 
-    @Injector(UserService) private userService: UserService;
-    @Injector(GapiPubSubService) private pubsub: GapiPubSubService;
-
+    constructor(
+        private userService: UserService,
+        private pubsub: GapiPubSubService
+    ) {}
 
     @Scope('ADMIN')
     @Type(UserObjectType)

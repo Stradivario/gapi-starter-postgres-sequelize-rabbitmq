@@ -11,10 +11,10 @@ interface UserInfo extends TokenData {
 @Service()
 export class AuthPrivateService {
 
-    @Injector(AuthService) private authService: AuthService;
-    @Injector(ConnectionHookService) private connectionHookService: ConnectionHookService;
-
-    constructor() {
+    constructor(
+        private authService: AuthService,
+        private connectionHookService: ConnectionHookService
+    ) {
         this.connectionHookService.modifyHooks.onSubConnection = this.onSubConnection.bind(this);
         this.authService.modifyFunctions.validateToken = this.validateToken.bind(this);
     }

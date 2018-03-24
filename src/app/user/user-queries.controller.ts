@@ -9,7 +9,9 @@ import { User } from '../../models/User';
 @GapiController()
 export class UserQueriesController {
 
-    @Injector(UserService) private userService: UserService;
+    constructor(
+        private userService: UserService
+    ) {}
 
     @Type(UserObjectType)
     @Query({
