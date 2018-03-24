@@ -1,11 +1,11 @@
 
 import { GapiModule } from '@gapi/core';
-import { SequelizeModule } from '@gapi/sequelize';
+import { GapiSequelizeModule } from '@gapi/sequelize';
 import { AuthPrivateService } from './services/auth/auth.service';
 
 @GapiModule({
     imports: [
-        SequelizeModule.forRoot({
+        GapiSequelizeModule.forRoot({
             dialect: 'postgres',
             host: process.env.DB_HOST || '182.10.0.4',
             port: process.env.DB_PORT || '5432',
