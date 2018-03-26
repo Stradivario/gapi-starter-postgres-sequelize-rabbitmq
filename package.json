@@ -1,6 +1,6 @@
 {
   "name": "@gapi/starter-advanced",
-  "version": "0.7.12",
+  "version": "0.7.13",
   "description": " ",
   "main": "index.js",
   "scripts": {
@@ -20,8 +20,8 @@
   "author": "Kristiyan Tachev",
   "license": "MIT",
   "dependencies": {
-    "@gapi/core": "^0.7.2",
-    "@gapi/sequelize": "0.0.5",
+    "@gapi/core": "^0.7.13",
+    "@gapi/sequelize": "^0.7.13",
     "pm2-docker": "^2.1.0",
     "rxjs": "^5.5.6",
     "typescript": "^2.7.1"
