@@ -88,6 +88,7 @@ commands:
       - gapi api stop
       - gapi rabbitmq stop
       - gapi postgres stop
+      - gapi postgres stop-testing
     build: docker build -t gapi/api/prod .
   api:
     stop: docker rm -f gapi-api-prod
@@ -95,10 +96,15 @@ commands:
     stop: docker rm -f gapi-api-nginx
   postgres:
     stop: docker rm -f gapi-api-postgres
+    stop-testing: docker rm -f gapi-api-postgres-testing
   rabbitmq:
     stop: docker rm -f gapi-api-rabbitmq
     restart: docker restart gapi-api-rabbitmq
     enable-dashboard: docker exec gapi-api-rabbitmq rabbitmq-plugins enable rabbitmq_management
+  pgAdmin:
+    stop: docker rm -f gapi-api-pg-admin
+
+
 
 # You can define your custom commands for example 
 # commands:

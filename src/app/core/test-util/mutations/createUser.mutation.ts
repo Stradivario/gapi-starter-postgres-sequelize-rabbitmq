@@ -1,9 +1,9 @@
 export const CREATE_USER_MUTATION = `
-mutation addUser($username: String!, $userType: String!) {
-  addUser(username: $username, userType: $userType) {
+mutation addUser($username: String!, $type: String!) {
+  addUser(username: $username, type: $type) {
     id
     username
-    userType
+    type
   }
 }
 `;

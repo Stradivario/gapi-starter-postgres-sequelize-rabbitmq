@@ -1,7 +1,7 @@
-![Build Status](http://gitlab.youvolio.com/gapi/gapi-starter-postgres-sequelize/badges/master/build.svg)
-
 # @Gapi Advanced Starter 
 ##### @Nginx, @Rabbitmq, @Postgres, @Sequelize, @Docker, @Graphql
+
+[![Build Status](https://travis-ci.org/Stradivario/gapi-starter-postgres-sequelize-rabbitmq.svg?branch=master)](https://travis-ci.org/Stradivario/gapi-starter-postgres-sequelize-rabbitmq)
 
 ## This is advanced example project related with [GAPI](https://github.com/Stradivario/gapi)
 ## To check basic example project go to [basic-example](https://github.com/Stradivario/gapi-starter)

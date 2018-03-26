@@ -1,0 +1,19 @@
+sudo: required
+
+services:
+  - docker
+
+before_script:
+  - npm i -g @gapi/cli
+  - gapi app build
+  - gapi testing start
+
+script: 
+  - export FORCE_RECREATE=true
+  - gapi app build
+  - gapi testing start
+env:
+  - DEPLOY_PLATFORM=heroku
+language: node_js
+node_js:
+  - "7"

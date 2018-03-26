@@ -54,7 +54,7 @@ export class UserMutationsController {
         username: {
             type: new GraphQLNonNull(GraphQLString)
         },
-        userType: {
+        type: {
             type: new GraphQLNonNull(GraphQLString)
         },
         settings: {

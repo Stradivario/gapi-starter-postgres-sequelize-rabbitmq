@@ -14,7 +14,7 @@ import { AuthPrivateService } from './services/auth/auth.service';
             name: process.env.DB_NAME || 'postgres',
             storage: ':memory:',
             logging: true,
-            force: false,
+            force: process.env.FORCE_RECREATE ? true : false,
             modelPaths: [process.cwd() + '/src/models']
           }
         ),

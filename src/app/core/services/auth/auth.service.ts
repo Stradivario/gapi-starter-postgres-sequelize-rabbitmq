@@ -43,6 +43,10 @@ export class AuthPrivateService {
     }
 
     signJWTtoken(tokenData: TokenData): string {
+        return this.authService.sign(tokenData);
+    }
+
+    issueJWTToken(tokenData: TokenData) {
         const jwtToken = this.authService.sign({
             email: '',
             id: 1,

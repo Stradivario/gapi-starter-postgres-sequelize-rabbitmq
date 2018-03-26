@@ -24,6 +24,7 @@
   export interface IQuery {
     __typename?: "Query";
     findUser: IUserType | null;
+    login: IUserTokenType | null;
 }
 
   
@@ -31,7 +32,7 @@
     __typename?: "UserType";
     id: number | null;
     username: string | null;
-    userType: string | null;
+    type: string | null;
     settings: IUserSettings | null;
 }
 
@@ -40,6 +41,13 @@
     __typename?: "UserSettings";
     sidebar: boolean | null;
     language: string | null;
+}
+
+  
+  export interface IUserTokenType {
+    __typename?: "UserTokenType";
+    token: string | null;
+    user: IUserType | null;
 }
 
   /**

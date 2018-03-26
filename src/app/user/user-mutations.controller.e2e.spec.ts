@@ -1,4 +1,3 @@
-import { IQuery, IMutation } from '../core/test-util/api-types/graphql';
 import { TestUtilService } from '../core/test-util/testing.service';
 import { LOGIN_QUERY_TEST } from '../core/test-util/queries/login.query';
 import { REGISTER_MUTATION } from '../core/test-util/mutations/register.mutation';
@@ -8,21 +7,22 @@ import { Credential } from '../../models/Credential';
 import { AuthPrivateService } from '../core/services/auth/auth.service';
 import { Container } from '@gapi/core';
 import { User } from '../../models/User';
+import { IMutation } from '../core/api-introspection';
 
-const atcTestUtil: TestUtilService = Container.get(TestUtilService);
+const TestUtil: TestUtilService = Container.get(TestUtilService);
 
-beforeAll(() => atcTestUtil.init());
-afterAll(() => atcTestUtil.destroy());
+beforeAll(() => TestUtil.init());
+afterAll(() => TestUtil.destroy());
 
 describe('User Controller', () => {
 
   it('e2e: mutation => (createUser) : Should sucessfully create user to database', async done => {
     const userName = generateName();
-    atcTestUtil.sendRequest<any>({
+    TestUtil.sendRequest<IMutation>({
       query: CREATE_USER_MUTATION,
       variables: {
         username: userName,
-        userType: 'ADMIN'
+        type: 'ADMIN'
       }
     })
       .map(res => {
@@ -32,7 +32,7 @@ describe('User Controller', () => {
       .subscribe(async res => {
         expect(res.id).toBeDefined();
         expect(res.username).toBe(userName);
-        expect(res.userType).toBe('ADMIN');
+        expect(res.type).toBe('ADMIN');
         await User.destroy({ where: { id: res.id }});
         done();
       }, err => {
@@ -42,11 +42,11 @@ describe('User Controller', () => {
   });
 
 //   it('e2e: query => (login) : Should sucessfully login user and return authentication token', async done => {
-//     atcTestUtil.sendRequest<IQuery>({
+//     TestUtil.sendRequest<IQuery>({
 //       query: LOGIN_QUERY_TEST,
 //       variables: {
-//         email: atcTestUtil.users.USER.credential.email,
-//         password: Container.get(AuthPrivateService).decryptPassword(atcTestUtil.users.USER.credential.password)
+//         email: TestUtil.users.USER.credential.email,
+//         password: Container.get(AuthPrivateService).decryptPassword(TestUtil.users.USER.credential.password)
 //       }
 //     })
 //       .map(res => {
@@ -55,8 +55,8 @@ describe('User Controller', () => {
 //       })
 //       .subscribe(res => {
 //         expect(res.token).toBeTruthy();
-//         expect(res.email).toBe(atcTestUtil.users.USER.credential.email);
-//         expect(res.user.credential[0].password).toBe(atcTestUtil.users.USER.credential.password);
+//         expect(res.email).toBe(TestUtil.users.USER.credential.email);
+//         expect(res.user.credential[0].password).toBe(TestUtil.users.USER.credential.password);
 //         done();
 //       }, err => {
 //         expect(err).toBe(null);
@@ -68,9 +68,9 @@ describe('User Controller', () => {
 //     const fakeUser = {
 //       name: generateName(),
 //       email: generateEmail(),
-//       password: atcTestUtil.defaultPassword
+//       password: TestUtil.defaultPassword
 //     };
-//     atcTestUtil.sendRequest<IMutation>({
+//     TestUtil.sendRequest<IMutation>({
 //       query: REGISTER_MUTATION,
 //       variables: fakeUser
 //     })
@@ -81,7 +81,7 @@ describe('User Controller', () => {
 //       .subscribe(async res => {
 //         expect(res.name).toBeTruthy();
 //         expect(res.credential.email).toBe(fakeUser.email);
-//         expect(res.credential.password).toBe(Container.get(AuthPrivateService).encryptPassword(atcTestUtil.defaultPassword));
+//         expect(res.credential.password).toBe(Container.get(AuthPrivateService).encryptPassword(TestUtil.defaultPassword));
 //         await User.destroy({ where: { id: res.id }});
 //         await Credential.destroy({ where: { userId: res.id } });
 //         done();
