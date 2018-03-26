@@ -5,8 +5,6 @@ services:
 
 before_script:
   - npm i -g @gapi/cli
-  - gapi app build
-  - gapi testing start
 
 script: 
   - export FORCE_RECREATE=true
@@ -15,5 +13,3 @@ script:
 env:
   - DEPLOY_PLATFORM=heroku
 language: node_js
-node_js:
-  - "7"

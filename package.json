@@ -1,6 +1,6 @@
 {
   "name": "gapi-sequelize-postgress-starter",
-  "version": "0.5.8",
+  "version": "0.7.2",
   "description": " ",
   "main": "index.js",
   "scripts": {
