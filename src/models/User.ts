@@ -14,6 +14,7 @@ import { Credential } from './Credential';
 
 export interface UserSettings {
   sidebar: boolean;
+  language: string;
 }
 
 @Table

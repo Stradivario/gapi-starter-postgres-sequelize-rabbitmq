@@ -7,8 +7,8 @@ import {
     GraphQLInputObjectType, GraphQLBoolean
 } from '@gapi/core';
 import { UserService } from './services/user.service';
-import { UserObjectType } from './types/user.type';
-import { UserMessage, UserMessageType } from './types/user-message.type';
+import { UserType } from './types/user.type';
+import { UserMessage } from './types/user-message.type';
 import { UserPayloadType } from './types/user.payload.type';
 import { User } from '../../models/User';
 
@@ -21,7 +21,7 @@ export class UserMutationsController {
     ) {}
 
     @Scope('ADMIN')
-    @Type(UserObjectType)
+    @Type(UserType)
     @Mutation({
         id: {
             type: new GraphQLNonNull(GraphQLInt)
@@ -33,7 +33,7 @@ export class UserMutationsController {
 
 
     @Scope('ADMIN')
-    @Type(UserObjectType)
+    @Type(UserType)
     @Mutation({
         id: {
             type: new GraphQLNonNull(GraphQLID)
@@ -49,7 +49,7 @@ export class UserMutationsController {
 
 
     @Scope('ADMIN')
-    @Type(UserObjectType)
+    @Type(UserType)
     @Mutation({
         username: {
             type: new GraphQLNonNull(GraphQLString)
@@ -77,7 +77,7 @@ export class UserMutationsController {
 
 
     @Scope('ADMIN')
-    @Type(UserMessageType)
+    @Type(UserMessage)
     @Mutation({
         message: {
             type: new GraphQLNonNull(GraphQLString)

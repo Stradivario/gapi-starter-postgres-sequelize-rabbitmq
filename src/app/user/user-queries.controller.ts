@@ -3,7 +3,7 @@ import {
     GapiController, GraphQLInt, Injector
 } from '@gapi/core';
 import { UserService } from './services/user.service';
-import { UserObjectType } from './types/user.type';
+import { UserType } from './types/user.type';
 import { User } from '../../models/User';
 
 @GapiController()
@@ -13,7 +13,7 @@ export class UserQueriesController {
         private userService: UserService
     ) {}
 
-    @Type(UserObjectType)
+    @Type(UserType)
     @Query({
         id: {
             type: new GraphQLNonNull(GraphQLInt)

@@ -4,5 +4,3 @@ import { GapiObjectType, GraphQLScalarType, GraphQLString } from '@gapi/core';
 export class UserMessage {
     readonly message: number | GraphQLScalarType = GraphQLString;
 }
-
-export const UserMessageType = new UserMessage();

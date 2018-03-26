@@ -20,7 +20,8 @@ export const TEST_CONFIG = {
 export const FAKE_USERS: FakeUser[] = [{
     username: 'Kristiyan Tachev',
     settings: {
-        sidebar: true
+        sidebar: true,
+        language: 'FR'
     },
     email: 'kristiqn.tachev@gmail.com',
     password: TEST_CONFIG.defaultPassword,
@@ -28,7 +29,8 @@ export const FAKE_USERS: FakeUser[] = [{
 }, {
     username: 'Admin Account',
     settings: {
-        sidebar: true
+        sidebar: true,
+        language: 'FR'
     },
     email: 'admin.account@gmail.com',
     password: TEST_CONFIG.defaultPassword,
@@ -36,7 +38,8 @@ export const FAKE_USERS: FakeUser[] = [{
 }, {
     username: 'User Account',
     settings: {
-        sidebar: true
+        sidebar: true,
+        language: 'FR'
     },
     email: 'user.account@gmail.com',
     password: TEST_CONFIG.defaultPassword,
@@ -44,7 +47,8 @@ export const FAKE_USERS: FakeUser[] = [{
 }, {
     username: 'Zdravko Tatarski',
     settings: {
-        sidebar: true
+        sidebar: true,
+        language: 'FR'
     },
     email: 'zdravko.tatarski@gmail.com',
     password: TEST_CONFIG.defaultPassword,
@@ -52,7 +56,8 @@ export const FAKE_USERS: FakeUser[] = [{
 }, {
     username: 'Ivan Spiridonov Admin',
     settings: {
-        sidebar: true
+        sidebar: true,
+        language: 'FR'
     },
     email: 'pastir1@gmail.com',
     password: TEST_CONFIG.defaultPassword,
@@ -60,7 +65,8 @@ export const FAKE_USERS: FakeUser[] = [{
 }, {
     username: 'Ivan Spiridonov User',
     settings: {
-        sidebar: true
+        sidebar: true,
+        language: 'FR'
     },
     email: 'pastir2@gmail.com',
     password: TEST_CONFIG.defaultPassword,

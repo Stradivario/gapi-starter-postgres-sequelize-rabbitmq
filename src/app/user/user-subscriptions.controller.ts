@@ -3,7 +3,7 @@ import {
     GapiController, GapiPubSubService, Type, Injector, Subscribe,
     Subscription, withFilter, Scope, GraphQLInt, GraphQLNonNull
 } from '@gapi/core';
-import { UserMessageType, UserMessage } from './types/user-message.type';
+import { UserMessage } from './types/user-message.type';
 
 @GapiController()
 export class UserSubscriptionsController {
@@ -11,7 +11,7 @@ export class UserSubscriptionsController {
     @Injector(GapiPubSubService) private static pubsub: GapiPubSubService;
 
     @Scope('ADMIN')
-    @Type(UserMessageType)
+    @Type(UserMessage)
     @Subscribe(() => UserSubscriptionsController.pubsub.asyncIterator('CREATE_SIGNAL_BASIC'))
     @Subscription()
     subscribeToUserMessagesBasic(message): UserMessage {
@@ -19,7 +19,7 @@ export class UserSubscriptionsController {
     }
 
     @Scope('ADMIN')
-    @Type(UserMessageType)
+    @Type(UserMessage)
     @Subscribe(
         withFilter(
             () => UserSubscriptionsController.pubsub.asyncIterator('CREATE_SIGNAL_WITH_FILTER'),
