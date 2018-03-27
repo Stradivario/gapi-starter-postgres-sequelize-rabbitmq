@@ -1,10 +1,10 @@
 {
   "name": "@gapi/starter-advanced",
-  "version": "0.7.15",
+  "version": "0.7.16",
   "description": " ",
   "main": "index.js",
   "scripts": {
-    "postpublish":"git push ssh://git@gitlab.youvolio.com:522/gapi/gapi-starter-postgres-sequelize.git",
+    "postpublish": "git push ssh://git@gitlab.youvolio.com:522/gapi/gapi-starter-postgres-sequelize.git",
     "start": "gapi start",
     "start:prod": "gapi start --prod",
     "stop:prod": "gapi stop --prod",
