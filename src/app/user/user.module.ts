@@ -5,7 +5,7 @@ import { UserSubscriptionsController } from './user-subscriptions.controller';
 import { UserMutationsController } from './user-mutations.controller';
 import { UserService } from './services/user.service';
 import { AnotherService } from './services/another.service';
-import { UserEffects } from './user.effects';
+import { UserEffect } from './user.effect';
 
 @GapiModule({
     controllers: [
@@ -18,7 +18,7 @@ import { UserEffects } from './user.effects';
         AnotherService
     ],
     effects: [
-        UserEffects
+        UserEffect
     ]
 })
 export class UserModule {}
