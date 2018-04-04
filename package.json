@@ -21,8 +21,8 @@
   "author": "Kristiyan Tachev",
   "license": "MIT",
   "dependencies": {
-    "@gapi/core": "^0.7.129",
-    "@gapi/sequelize": "^0.7.129",
+    "@gapi/core": "^0.7.131",
+    "@gapi/sequelize": "^0.7.131",
     "pm2-docker": "^2.1.0",
     "rxjs": "^5.5.6",
     "typescript": "^2.7.1"
