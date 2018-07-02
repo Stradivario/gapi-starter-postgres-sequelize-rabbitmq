@@ -1,9 +1,9 @@
 import {
     GraphQLNonNull,
     Scope, Type,
-    Mutation, GapiController,
-    GraphQLInt, Injector,
-    GapiPubSubService, GraphQLString, GraphQLID,
+    Mutation, Controller,
+    GraphQLInt,
+    PubSubService, GraphQLString, GraphQLID,
     GraphQLInputObjectType, GraphQLBoolean
 } from '@gapi/core';
 import { UserService } from './services/user.service';
@@ -12,12 +12,12 @@ import { UserMessage } from './types/user-message.type';
 import { UserPayloadType } from './types/user.payload.type';
 import { User } from '../../models/User';
 
-@GapiController()
+@Controller()
 export class UserMutationsController {
 
     constructor(
         private userService: UserService,
-        private pubsub: GapiPubSubService
+        private pubsub: PubSubService
     ) {}
 
     @Scope('ADMIN')

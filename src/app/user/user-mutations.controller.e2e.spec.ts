@@ -1,13 +1,10 @@
 import { TestUtilService } from '../core/test-util/testing.service';
-import { LOGIN_QUERY_TEST } from '../core/test-util/queries/login.query';
-import { REGISTER_MUTATION } from '../core/test-util/mutations/register.mutation';
 import { CREATE_USER_MUTATION } from '../core/test-util/mutations/createUser.mutation';
-import { generateName, generateEmail } from '../core/test-util/randomNameGenerator';
-import { Credential } from '../../models/Credential';
-import { AuthPrivateService } from '../core/services/auth/auth.service';
+import { generateName } from '../core/test-util/randomNameGenerator';
 import { Container } from '@gapi/core';
 import { User } from '../../models/User';
 import { IMutation } from '../core/api-introspection';
+import { map } from 'rxjs/operators';
 
 const TestUtil: TestUtilService = Container.get(TestUtilService);
 
@@ -25,10 +22,12 @@ describe('User Controller', () => {
         type: 'ADMIN'
       }
     })
-      .map(res => {
-        expect(res.success).toBeTruthy();
-        return res.data.addUser;
-      })
+      .pipe(
+        map(res => {
+          expect(res.success).toBeTruthy();
+          return res.data.addUser;
+        })
+      )
       .subscribe(async res => {
         expect(res.id).toBeDefined();
         expect(res.username).toBe(userName);

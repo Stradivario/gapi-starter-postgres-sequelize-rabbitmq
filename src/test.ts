@@ -2,7 +2,7 @@ import { TestUtilService } from './app/core/test-util/testing.service';
 import { Container } from '@gapi/core';
 import { UserSettings, User } from './models/User';
 import { Credential } from './models/Credential';
-import { AuthPrivateService } from './app/core/services/auth/auth.service';
+import { AuthService } from './app/core/services/auth/auth.service';
 
 interface FakeUser {
     username: string;
@@ -90,7 +90,7 @@ if (process.env.BEFORE_HOOK) {
                     await Credential.create({
                         userId: user.id,
                         email: fakeUser.email,
-                        password: Container.get(AuthPrivateService).encryptPassword(fakeUser.password)
+                        password: Container.get(AuthService).encryptPassword(fakeUser.password)
                     });
                     return user;
                 }));

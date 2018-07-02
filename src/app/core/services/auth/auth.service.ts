@@ -1,25 +1,26 @@
 
-import { Service, ConnectionHookService, AuthService, Injector, TokenData } from '@gapi/core';
+import { Service } from '@rxdi/core';
 import * as Boom from 'boom';
+import { AuthInterface, AuthInternalService, TokenData } from '@gapi/auth';
 
-
-interface UserInfo extends TokenData {
+export interface UserInfo {
     scope: ['ADMIN', 'USER'];
     type: 'ADMIN' | 'USER';
+    iat: number;
 }
 
 @Service()
-export class AuthPrivateService {
+export class AuthService implements AuthInterface {
 
     constructor(
-        private authService: AuthService,
-        private connectionHookService: ConnectionHookService
-    ) {
-        this.connectionHookService.modifyHooks.onSubConnection = this.onSubConnection.bind(this);
-        this.authService.modifyFunctions.validateToken = this.validateToken.bind(this);
+        private authService: AuthInternalService
+    ) { }
+
+    onSubOperation(message, params, webSocket) {
+        return params;
     }
 
-    onSubConnection(connectionParams): UserInfo {
+    onSubConnection(connectionParams): TokenData {
         if (connectionParams.token) {
             return this.validateToken(connectionParams.token, 'Subscription');
         } else {
@@ -27,8 +28,8 @@ export class AuthPrivateService {
         }
     }
 
-    validateToken(token: string, requestType: 'Query' | 'Subscription' = 'Query'): UserInfo {
-        const user = <UserInfo>this.verifyToken(token);
+    validateToken(token: string, requestType: 'Query' | 'Subscription' = 'Query'): any {
+        const user = <any>this.authService.verifyToken(token);
         user.type = user.scope[0];
         console.log(`${requestType} from: ${JSON.stringify(user)}`);
         if (user) {
@@ -36,10 +37,6 @@ export class AuthPrivateService {
         } else {
             throw Boom.unauthorized();
         }
-    }
-
-    verifyToken(token: string): TokenData {
-        return this.authService.verifyToken(token);
     }
 
     signJWTtoken(tokenData: TokenData): string {
@@ -53,6 +50,10 @@ export class AuthPrivateService {
             scope: ['ADMIN', 'USER']
         });
         return jwtToken;
+    }
+
+    verifyToken(token: string): TokenData {
+        return this.authService.verifyToken(token);
     }
 
     decryptPassword(password: string): string {

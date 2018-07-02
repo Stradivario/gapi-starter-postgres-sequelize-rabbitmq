@@ -1,12 +1,13 @@
-import { Service, Container, Injector } from '@gapi/core';
-import { GapiSequelizeService, SequelizeConfigService } from '@gapi/sequelize';
-import { Observable } from 'rxjs';
+import { Service, Injector, Container } from '@gapi/core';
+import { Observable, from } from 'rxjs';
 import { tester } from 'graphql-tester';
 import { User } from '../../../models/User';
-import { Sequelize } from 'sequelize-typescript';
 import { Credential } from '../../../models/Credential';
 import { generateEmail, generateName } from './randomNameGenerator';
-import { AuthPrivateService } from '../services/auth/auth.service';
+import { AuthService } from '../services/auth/auth.service';
+import { Sequelize } from 'sequelize-typescript';
+import { SequelizeConfig } from '@gapi/sequelize';
+import { AuthTestingModule } from '../services/auth/auth.service.unit.module';
 
 interface Response<T> {
     raw: string;
@@ -35,16 +36,18 @@ interface SendRequestQueryType {
     signiture?: SIGNITURE;
 }
 
+Container.get(AuthTestingModule);
+
 @Service()
 export class TestUtilService {
     users: TESTERS = {};
     defaultPassword = '123456';
     private tester: any;
-    public sequelize: GapiSequelizeService;
+    public sequelize: Sequelize;
     private ME_TESTING_DATABASE_ID = 1;
     private ADMIN_TESTING_DATABASE_ID = 2;
     private USER_TESTING_DATABASE_ID = 3;
-    private defaultSequelizeConfig: SequelizeConfigService = {
+    private defaultSequelizeConfig: SequelizeConfig = {
         dialect: 'postgres',
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
@@ -56,13 +59,13 @@ export class TestUtilService {
         force: false,
         modelPaths: [process.cwd() + '/src/models']
     };
-    public sequelizeConfig: SequelizeConfigService = this.defaultSequelizeConfig;
+    public sequelizeConfig: SequelizeConfig = this.defaultSequelizeConfig;
 
-    @Injector(AuthPrivateService) private authService: AuthPrivateService;
+    @Injector(AuthService) private authService: AuthService;
 
     currentTestSignitures: Array<SIGNITURE> = [];
     // tslint:disable-next-line:max-line-length
-    private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtyaXN0aXFuLnRhY2hldkBnbWFpbC5jb20iLCJzY29wZSI6WyJBRE1JTiJdLCJpZCI6MSwiaWF0IjoxNTE2OTk2MzYxfQ.7ANr5VHrViD3NkCaDr0nSWYwk46UAEbOwB52pqye4AM';
+    // private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtyaXN0aXFuLnRhY2hldkBnbWFpbC5jb20iLCJzY29wZSI6WyJBRE1JTiJdLCJpZCI6MSwiaWF0IjoxNTE2OTk2MzYxfQ.7ANr5VHrViD3NkCaDr0nSWYwk46UAEbOwB52pqye4AM';
 
     constructor(
 
@@ -71,10 +74,11 @@ export class TestUtilService {
     }
 
     initSequelize() {
-        this.sequelize = new GapiSequelizeService(this.sequelizeConfig);
+        this.sequelize = new Sequelize(<any>this.sequelizeConfig);
+        this.sequelize.sync({ force: this.sequelizeConfig.force, logging: this.sequelizeConfig.logging });
     }
 
-    setSequelizeConfig(config?: SequelizeConfigService) {
+    setSequelizeConfig(config?: SequelizeConfig) {
         this.sequelizeConfig = config ? Object.assign(this.defaultSequelizeConfig, config) : this.defaultSequelizeConfig;
     }
 
@@ -94,7 +98,7 @@ export class TestUtilService {
                 authorization: query.signiture.token
             });
         }
-        return Observable.fromPromise(this.tester(JSON.stringify(query)));
+        return from(this.tester(JSON.stringify(query)));
     }
 
     init() {
@@ -104,7 +108,7 @@ export class TestUtilService {
 
     async destroy() {
         await this.softDeleteTestSignitures();
-        this.sequelize.sequelize.close();
+        this.sequelize.close();
     }
 
     async destroySigniture(signiture: SIGNITURE) {
@@ -155,7 +159,7 @@ export class TestUtilService {
             user: ADMIN_CREDENTIAL.user,
             token: this.authService.signJWTtoken({
                 email: ADMIN_CREDENTIAL.email,
-                scope: [ADMIN_CREDENTIAL.user.userType],
+                scope: [ADMIN_CREDENTIAL.user.type],
                 id: ADMIN_CREDENTIAL.id
             })
         };
@@ -165,7 +169,7 @@ export class TestUtilService {
             user: USER_CREDENTIAL.user,
             token: this.authService.signJWTtoken({
                 email: USER_CREDENTIAL.email,
-                scope: [USER_CREDENTIAL.user.userType],
+                scope: [USER_CREDENTIAL.user.type],
                 id: USER_CREDENTIAL.id
             })
         };
@@ -175,7 +179,7 @@ export class TestUtilService {
             user: ME_CREDENTIAL.user,
             token: this.authService.signJWTtoken({
                 email: ME_CREDENTIAL.email,
-                scope: [ME_CREDENTIAL.user.userType],
+                scope: [ME_CREDENTIAL.user.type],
                 id: ME_CREDENTIAL.id
             })
         };
@@ -193,7 +197,7 @@ export class TestUtilService {
 
         const token = this.authService.signJWTtoken({
             email: credential.email,
-            scope: [user.userType],
+            scope: [user.type],
             id: credential.id
         });
         const signiture = { user, credential, token: token };

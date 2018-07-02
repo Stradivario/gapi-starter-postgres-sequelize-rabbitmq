@@ -1,14 +1,14 @@
 
 import {
-    GapiController, GapiPubSubService, Type, Injector, Subscribe,
+    Controller, PubSubService, Type, Injector, Subscribe,
     Subscription, withFilter, Scope, GraphQLInt, GraphQLNonNull
 } from '@gapi/core';
 import { UserMessage } from './types/user-message.type';
 
-@GapiController()
+@Controller()
 export class UserSubscriptionsController {
 
-    @Injector(GapiPubSubService) private static pubsub: GapiPubSubService;
+    @Injector(PubSubService) private static pubsub: PubSubService;
 
     @Scope('ADMIN')
     @Type(UserMessage)

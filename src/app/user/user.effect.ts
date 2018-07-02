@@ -1,11 +1,11 @@
-import { OfType, GapiEffect, GapiPubSubService } from '@gapi/core';
+import { OfType, Effect } from '@gapi/core';
 import { EffectTypes } from '../core/api-introspection/EffectTypes';
 
-@GapiEffect()
+@Effect()
 export class UserEffect {
 
     constructor(
-        private pubSub: GapiPubSubService
+        // private pubSub: PubSubService
     ) {}
 
     @OfType<EffectTypes>(EffectTypes.findUser)

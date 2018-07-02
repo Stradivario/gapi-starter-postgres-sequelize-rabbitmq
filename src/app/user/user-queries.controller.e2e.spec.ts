@@ -1,8 +1,6 @@
 import { TestUtilService } from '../core/test-util/testing.service';
-import { LOGIN_QUERY_TEST } from '../core/test-util/queries/login.query';
-import { REGISTER_MUTATION } from '../core/test-util/mutations/register.mutation';
-import { AuthPrivateService } from '../core/services/auth/auth.service';
 import { Container } from '@gapi/core';
+import { map } from 'rxjs/operators';
 import { IQuery } from '../core/api-introspection/index';
 
 const testUtil: TestUtilService = Container.get(TestUtilService);
@@ -32,10 +30,12 @@ describe('User Queries Controller', () => {
         password: '123456',
       }
     })
-      .map(res => {
-        expect(res.success).toBeTruthy();
-        return res.data.login;
-      })
+      .pipe(
+        map(res => {
+          expect(res.success).toBeTruthy();
+          return res.data.login;
+        })
+      )
       .subscribe(async res => {
         expect(res.token).toBeTruthy();
         expect(res.user.username).toBe('testing@gmail.com');
