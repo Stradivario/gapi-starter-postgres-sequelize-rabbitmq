@@ -21,9 +21,9 @@
   "author": "Kristiyan Tachev",
   "license": "MIT",
   "dependencies": {
-    "@gapi/auth": "git+https://github.com/Stradivario/gapi-auth.git",
-    "@gapi/core": "git+https://github.com/Stradivario/gapi-core",
-    "@gapi/sequelize": "git+https://github.com/Stradivario/gapi-sequelize",
+    "@gapi/auth": "^2.0.0",
+    "@gapi/core": "^2.0.0",
+    "@gapi/sequelize": "^2.0.0",
     "pg": "^6.4.2"
   },
   "devDependencies": {
