@@ -31,7 +31,7 @@
     "graphql-tester": "0.0.5",
     "jest": "^22.4.2",
     "pm2-docker": "^2.1.0",
-    "typescript": "^2.7.1",
+    "typescript": "3.0.1",
     "jest-cli": "^22.4.2",
     "ts-jest": "^22.4.1",
     "ts-lint": "^4.5.1"
