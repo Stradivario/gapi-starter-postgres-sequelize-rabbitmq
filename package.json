@@ -21,9 +21,9 @@
   "author": "Kristiyan Tachev",
   "license": "MIT",
   "dependencies": {
-    "@gapi/auth": "^1.2.43",
-    "@gapi/core": "^1.2.43",
-    "@gapi/sequelize": "^1.2.43",
+    "@gapi/auth": "^1.2.45",
+    "@gapi/core": "^1.2.45",
+    "@gapi/sequelize": "^1.2.45",
     "pg": "^6.4.2"
   },
   "devDependencies": {
