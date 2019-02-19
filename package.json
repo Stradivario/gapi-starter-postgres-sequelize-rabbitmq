@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postpublish": "git push -f ssh://git@gitlab.youvolio.com:522/gapi/gapi-starter-postgres-sequelize.git && git push --tags && git push ssh://git@gitlab.youvolio.com:522/gapi/gapi-starter-postgres-sequelize.git --tags",
-    "start": "gapi start",
+    "start": "gapi start --local --lint",
     "start:prod": "gapi start --prod",
     "stop:prod": "gapi stop --prod",
     "start:docker": "gapi app start",
