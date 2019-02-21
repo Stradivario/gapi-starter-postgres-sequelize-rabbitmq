@@ -87,8 +87,8 @@ export class UserMutationsController {
         },
     })
     publishSignal(root, { message, signal }, context): UserMessage {
-        console.log(`${signal} Signal Published message: ${message} by ${context.email}`);
-        this.pubsub.publish(signal, `${signal} Signal Published message: ${message} by ${context.email}`);
+        console.log(`${signal} Signal Published message: ${message} by ${context.user.email}`);
+        this.pubsub.publish(signal, `${signal} Signal Published message: ${message} by ${context.user.email}`);
         return { message };
     }
 
