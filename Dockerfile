@@ -4,7 +4,7 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
-RUN npm install -g pm2-docker ts-node typescript @gapi/cli pm2@2.10.2 jest
+RUN npm install -g --unsafe-perm pm2-docker ts-node typescript @gapi/cli pm2@2.10.2 jest
 
 COPY package.json package.json
 
