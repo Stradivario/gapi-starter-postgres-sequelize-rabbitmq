@@ -23,11 +23,13 @@
   "dependencies": {
     "@gapi/auth": "^1.8.18",
     "@gapi/core": "^1.8.18",
+    "graphql":"^14.5.8",
     "@gapi/sequelize": "^1.8.18",
     "pg": "^6.4.2"
   },
   "devDependencies": {
     "@types/jest": "^22.2.0",
+    "@types/graphql": "^14.5.0",
     "graphql-tester": "0.0.5",
     "jest": "^22.4.2",
     "pm2-docker": "^2.1.0",
