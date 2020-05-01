@@ -16,7 +16,9 @@
     "pretest": "npm run lint",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "test": "gapi test --before",
-    "test-watch": "gapi test --before && gapi test --watch"
+    "test-watch": "gapi test --before && gapi test --watch",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "Kristiyan Tachev",
   "license": "MIT",
@@ -25,7 +27,8 @@
     "@gapi/core": "^1.8.22",
     "graphql": "^14.5.8",
     "@gapi/sequelize": "^1.8.22",
-    "pg": "^6.4.2"
+    "pg": "^6.4.2",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@types/jest": "^22.2.0",
@@ -75,5 +78,6 @@
     "testRegex": "/src/.*\\.spec.(ts|tsx|js)$",
     "verbose": true,
     "collectCoverage": true
-  }
+  },
+  "snyk": true
 }
