@@ -25,7 +25,7 @@
     "@gapi/core": "^1.8.22",
     "graphql": "^14.5.8",
     "@gapi/sequelize": "^1.8.22",
-    "pg": "^6.4.2"
+    "pg": "^8.4.0"
   },
   "devDependencies": {
     "@types/jest": "^22.2.0",
